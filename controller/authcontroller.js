@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const register = async (req, res, next) => {
   try {
@@ -38,10 +39,17 @@ export const login = async (req, res, next) => {
         status: 400
       });
 
-    res.status(200).send({
-      msg: "Login Successfully",
-      status: 200
-    });
+    const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin },process.env.JWT);
+
+    res
+      .cookie("access-token", token, {
+        httpOnly: true
+      })
+      .status(200)
+      .send({
+        msg: "Login Successfully",
+        status: 200
+      });
   } catch (error) {
     next(error);
   }
