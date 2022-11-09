@@ -9,7 +9,7 @@ import {
   verifyAdmin,
   verifytoken,
   verifyuser
-} from "../controller/utils/verifyToken.js";
+} from "../utils/verifyToken.js";
 const router = express.Router();
 
 // --------------------------------------------------
